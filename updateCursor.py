@@ -7,12 +7,17 @@ gdb_path = r"D:\1_BVIEER\3rd_sem\Programming for GIS- III Mr. Ronit Jadhav\Pract
 fc_name = "MajorAttractions"
 fc_path = os.path.join(gdb_path, fc_name)
 
-fields_list = ["ESTAB", "NAME"]
+fields_list = ["NAME","ESTAB"]
 
+year_dist = {}
 with arcpy.da.UpdateCursor(fc_path, fields_list) as u_cursor:
     for row in u_cursor:
-        print(row[0])
-        print(row[1])
+        if row[1] ==0:
+            print(row[0])
+            row[1] = 1998
+        u_cursor.updateRow(row)
+        year_dist[row[0]] = row[1]
 
+print(year_dist)
 print("Process Completed")
 
